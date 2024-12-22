@@ -197,6 +197,11 @@ def generate_metrics(output_dir, aligned_bam=None, vcf_file=None):
         print(f"Generating VCF stats for {vcf_file}")
         subprocess.run(cmd_vcf, shell=True, check=True)
 
+    cmd_multiqc = [
+        "multiqc", metrics_dir
+    ]
+    subprocess.run(cmd_multiqc, shell=True, check=True)
+
     print(f"Metrics generated and saved in {metrics_dir}")
 
 
