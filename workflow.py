@@ -162,6 +162,44 @@ def filter_variants(input_vcf, output_dir):
     subprocess.run(" ".join(cmd), shell=True, check=True)
     return filtered_vcf
 
+def generate_metrics(output_dir, aligned_bam=None, vcf_file=None):
+    """
+    Generate various metrics for the files created in the pipeline.
+    """
+    metrics_dir = os.path.join(output_dir, "metrics")
+    os.makedirs(metrics_dir, exist_ok=True)
+
+    # Generate BAM Metrics
+    if aligned_bam:
+        flagstat_file = os.path.join(metrics_dir, "bam_flagstat.txt")
+        idxstats_file = os.path.join(metrics_dir, "bam_idxstats.txt")
+        coverage_file = os.path.join(metrics_dir, "bam_coverage.txt")
+
+        # Flagstat
+        cmd_flagstat = f"samtools flagstat {aligned_bam} > {flagstat_file}"
+        print(f"Generating flagstat metrics for {aligned_bam}")
+        subprocess.run(cmd_flagstat, shell=True, check=True)
+
+        # Idxstats
+        cmd_idxstats = f"samtools idxstats {aligned_bam} > {idxstats_file}"
+        print(f"Generating idxstats metrics for {aligned_bam}")
+        subprocess.run(cmd_idxstats, shell=True, check=True)
+
+        # Coverage
+        cmd_coverage = f"samtools depth {aligned_bam} > {coverage_file}"
+        print(f"Generating coverage metrics for {aligned_bam}")
+        subprocess.run(cmd_coverage, shell=True, check=True)
+
+    # Generate VCF Metrics
+    if vcf_file:
+        vcf_stats = os.path.join(metrics_dir, "vcf_stats.txt")
+        cmd_vcf = f"bcftools stats {vcf_file} > {vcf_stats}"
+        print(f"Generating VCF stats for {vcf_file}")
+        subprocess.run(cmd_vcf, shell=True, check=True)
+
+    print(f"Metrics generated and saved in {metrics_dir}")
+
+
 def main():
     """
     Main function to parse arguments and run the bioinformatics pipeline.
@@ -215,6 +253,14 @@ def main():
     # Step 7: Filter variants by quality
     print("Step 7: Filtering variants with quality > 20")
     filtered_vcf = filter_variants(mpileup_vcf, output_dir)
+
+    # Step 8: Generate metrics
+    print("Step 8: Generating metrics for pipeline outputs")
+    generate_metrics(
+        output_dir=output_dir,
+        aligned_bam=sorted_bam,
+        vcf_file=filtered_vcf
+    )
 
     print(f"Pipeline completed. Results are in {output_dir}")
 
