@@ -162,7 +162,7 @@ def filter_variants(input_vcf, output_dir):
     subprocess.run(cmd, shell=True, check=True)
     return filtered_vcf
 
-def generate_metrics(output_dir, aligned_bam=None, vcf_file=None):
+def generate_metrics(output_dir, sorted_bam=None, vcf_file=None):
     """
     Generate various metrics for the files created in the pipeline.
     """
@@ -198,9 +198,9 @@ def generate_metrics(output_dir, aligned_bam=None, vcf_file=None):
         subprocess.run(cmd_vcf, shell=True, check=True)
 
     cmd_multiqc = [
-        "multiqc", metrics_dir
+        "multiqc", metrics_dir,"-o","/shared/multiqc_outputs"
     ]
-    subprocess.run(cmd_multiqc, shell=True, check=True)
+    subprocess.run(" ".join(cmd_multiqc), shell=True, check=True)
 
     print(f"Metrics generated and saved in {metrics_dir}")
 
@@ -263,7 +263,7 @@ def main():
     print("Step 8: Generating metrics for pipeline outputs")
     generate_metrics(
         output_dir=output_dir,
-        aligned_bam=sorted_bam,
+        sorted_bam=sorted_bam,
         vcf_file=filtered_vcf
     )
 
