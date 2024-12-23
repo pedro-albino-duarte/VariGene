@@ -170,24 +170,24 @@ def generate_metrics(output_dir, sorted_bam=None, vcf_file=None):
     os.makedirs(metrics_dir, exist_ok=True)
 
     # Generate BAM Metrics
-    if aligned_bam:
+    if sorted_bam:
         flagstat_file = os.path.join(metrics_dir, "bam_flagstat.txt")
         idxstats_file = os.path.join(metrics_dir, "bam_idxstats.txt")
         coverage_file = os.path.join(metrics_dir, "bam_coverage.txt")
 
         # Flagstat
-        cmd_flagstat = f"samtools flagstat {aligned_bam} > {flagstat_file}"
-        print(f"Generating flagstat metrics for {aligned_bam}")
+        cmd_flagstat = f"samtools flagstat {sorted_bam} > {flagstat_file}"
+        print(f"Generating flagstat metrics for {sorted_bam}")
         subprocess.run(cmd_flagstat, shell=True, check=True)
 
         # Idxstats
-        cmd_idxstats = f"samtools idxstats {aligned_bam} > {idxstats_file}"
-        print(f"Generating idxstats metrics for {aligned_bam}")
+        cmd_idxstats = f"samtools idxstats {sorted_bam} > {idxstats_file}"
+        print(f"Generating idxstats metrics for {sorted_bam}")
         subprocess.run(cmd_idxstats, shell=True, check=True)
 
         # Coverage
-        cmd_coverage = f"samtools depth {aligned_bam} > {coverage_file}"
-        print(f"Generating coverage metrics for {aligned_bam}")
+        cmd_coverage = f"samtools depth {sorted_bam} > {coverage_file}"
+        print(f"Generating coverage metrics for {sorted_bam}")
         subprocess.run(cmd_coverage, shell=True, check=True)
 
     # Generate VCF Metrics
