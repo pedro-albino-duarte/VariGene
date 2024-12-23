@@ -146,7 +146,7 @@ def run_mpileup_and_call_variants(reference_genome, bam_file, output_dir):
         "bcftools", "call", "-mv", "-Ov", "-o", mpileup_vcf
     ]
     print(f"Running mpileup and variant calling: {' '.join(cmd)}")
-    subprocess.run(cmd, shell=True, check=True)
+    subprocess.run(" ".join(cmd), shell=True, check=True)
     return mpileup_vcf
 
 def filter_variants(input_vcf, output_dir):
@@ -159,7 +159,7 @@ def filter_variants(input_vcf, output_dir):
         "bcftools", "view", "-i", "'QUAL>20'", input_vcf, "-o", filtered_vcf
     ]
     print(f"Filtering variants: {' '.join(cmd)}")
-    subprocess.run(cmd, shell=True, check=True)
+    subprocess.run(" ".join(cmd), shell=True, check=True)
     return filtered_vcf
 
 def generate_metrics(output_dir, sorted_bam=None, vcf_file=None):
