@@ -59,7 +59,7 @@ This pipeline accepts any sample from a genomic origin that could be single-end 
    docker exec -u root -it varigene-container /bin/bash
    ```
 
-6. *(Optional)* Download a sample file for testing, and move it to the /VariGene folder:
+6. *(Optional)* Download a sample file for testing, and move it to the /VariGene folder, in your local computer:
    ```bash
    wget https://storage.googleapis.com/bucket-challenge-pedrod/SRR13065073_1.fastq -P /VariGene
    ```
@@ -74,7 +74,7 @@ This pipeline accepts any sample from a genomic origin that could be single-end 
    ```
 
 8. View the generated MultiQC report:
-   Open the file `/multiqc_outputs/multiqc_report.html` in your VariGene directory.
+   Open the file `/multiqc_outputs/multiqc_report.html` in your VariGene local directory.
 
 ---
 
