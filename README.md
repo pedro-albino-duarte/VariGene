@@ -80,7 +80,7 @@ This pipeline accepts any sample from a genomic origin that could be single-end 
 
 ## Response to Question 3
 
-### 3.1 Metric analysis
+### 3.1 Metrics analysis
 
 #### Mapped and Unmapped Reads
 
@@ -210,4 +210,4 @@ This README file details the setup and application of the VariGene pipeline, add
 
 Author: Pedro Duarte
 
-Project Copyrights: Germano de Sousa
+Project Copyright: Germano de Sousa
